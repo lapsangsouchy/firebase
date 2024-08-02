@@ -2,6 +2,8 @@
  * @TODO get a reference to the Firebase Database object
  */
 
+const database = firebase.database().ref();
+
 /**
  * @TODO get const references to the following elements:
  *      - div with id #all-messages
@@ -10,6 +12,12 @@
  *      - button with id #send-btn and the updateDB
  *        function as an onclick event handler
  */
+
+const allMessages = document.getElementById('all-messages');
+const usernameElem = document.getElementById('username');
+const messageElem = document.getElementById('message');
+const sendBtn = document.getElementById('send-btn');
+sendBtn.onclick = updateDB;
 
 /**
  * @TODO create a function called updateDB which takes
@@ -24,9 +32,18 @@
 
 function updateDB(event) {
   // Prevent default refresh
+  event.preventDefault();
+
   // Create data object
+  const data = {
+    USERNAME: usernameElem.value,
+    MESSAGE: messageElem.value,
+  };
   // GET *PUSH* PUT DELETE
   // Write to our database
+  database.push(data);
+
+  messageElem.value = '';
 }
 
 /**
@@ -34,6 +51,8 @@ function updateDB(event) {
  * handler for the "child_added" event on the database
  * object
  */
+
+database.on('child_added', addMessageToBoard);
 
 /**
  * @TODO create a function called addMessageToBoard that
@@ -46,7 +65,13 @@ function updateDB(event) {
  *
  */
 
-function addMessageToBoard(rowData) {}
+function addMessageToBoard(rowData) {
+  const data = rowData.val();
+
+  let singleMessage = makeSingleMessageHTML(data.USERNAME, data.MESSAGE);
+
+  allMessages.append(singleMessage);
+}
 
 /**
  * @TODO create a function called makeSingleMessageHTML which takes
@@ -68,11 +93,25 @@ function addMessageToBoard(rowData) {}
 
 function makeSingleMessageHTML(usernameTxt, messageTxt) {
   // Create Parent Div
+  let parentDiv = document.createElement('div');
   // Add Class name .single-message
+  parentDiv.className = 'single-message';
+
   // Create Username P Tag
+  let usernameP = document.createElement('p');
+  usernameP.className = 'single-message-username';
+  usernameP.innerHTML = usernameTxt + ':';
+
   // Append username
+  parentDiv.append(usernameP);
+
   // Create message P Tag
+  let messageP = document.createElement('p');
+  messageP.innerHTML = messageTxt;
+  parentDiv.append(messageP);
+
   // Return Parent Div
+  return parentDiv;
 }
 
 /**
@@ -81,4 +120,39 @@ function makeSingleMessageHTML(usernameTxt, messageTxt) {
  * Enter key
  *
  * @BONUS use an arrow function
+ *
  */
+
+const handleEnterKey = (event) => {
+  if (event.key === 'Enter') {
+    if (usernameElem.value == '' || messageElem.value == '') {
+      alert('Please enter something');
+    } else {
+      updateDB(event);
+    }
+  }
+};
+
+usernameElem.addEventListener('keydown', handleEnterKey);
+messageElem.addEventListener('keydown', handleEnterKey);
+
+/**
+ * FOR INSTRUCTOR PURPOSES ONLY - CLEARING MESSAGES EVERY 30 MINUTES
+ */
+// Function to clear the chat messages (you don't need to teach this!)
+function clearChat() {
+  // Clear the Firebase database
+  database
+    .remove()
+    .then(() => {
+      // Clear the chat display
+      allMessages.innerHTML = '';
+      console.log('Chat messages cleared successfully.');
+    })
+    .catch((error) => {
+      console.error('Error clearing chat messages:', error);
+    });
+}
+
+// Set a timeout to clear chat messages after thirty minutes (1800000 milliseconds)
+setTimeout(clearChat, 1800000);
