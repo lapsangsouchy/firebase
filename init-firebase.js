@@ -4,12 +4,13 @@
  */
 const firebaseConfig = {
   // This info will be different for your Firebase database
-  apiKey: 'AIzaSyC-KjqGHq0s2444BiSBLFSb7Msh6eWfVzE',
-  authDomain: 'test-d96f9.firebaseapp.com',
-  projectId: 'test-d96f9',
-  storageBucket: 'test-d96f9.appspot.com',
-  messagingSenderId: '156469479031',
-  appId: '1:156469479031:web:2e8a831c34843a692de872',
+  apiKey: 'AIzaSyByUtoB4ha4hi6k8ykHjpciCQM7vk0abaI',
+  authDomain: 'fire-chat-21df9.firebaseapp.com',
+  databaseURL: 'https://fire-chat-21df9-default-rtdb.firebaseio.com',
+  projectId: 'fire-chat-21df9',
+  storageBucket: 'fire-chat-21df9.appspot.com',
+  messagingSenderId: '1057045890369',
+  appId: '1:1057045890369:web:2b1ffae8aff852617c0dc0',
 };
 
 // initialize the firebase app with this built-in function

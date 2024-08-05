@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * @TODO get a reference to the Firebase Database object
  */
@@ -39,10 +40,15 @@ function updateDB(event) {
     USERNAME: usernameElem.value,
     MESSAGE: messageElem.value,
   };
+
+  // console.log the object
+  console.log(data);
+
   // GET *PUSH* PUT DELETE
   // Write to our database
   database.push(data);
 
+  // Reset message
   messageElem.value = '';
 }
 
@@ -66,10 +72,16 @@ database.on('child_added', addMessageToBoard);
  */
 
 function addMessageToBoard(rowData) {
+  // store the values of rowData inside object named 'data'
   const data = rowData.val();
 
+  // console.log data
+  console.log(data);
+
+  // store a function call for makeSingleMessageHTML(), which takes in our data and creates an HTML element with it
   let singleMessage = makeSingleMessageHTML(data.USERNAME, data.MESSAGE);
 
+  // append the new message HTML element to allMessages
   allMessages.append(singleMessage);
 }
 
