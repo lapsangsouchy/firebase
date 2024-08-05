@@ -72,16 +72,17 @@ database.on('child_added', addMessageToBoard);
  */
 
 function addMessageToBoard(rowData) {
-  // store the values of rowData inside object named 'data'
+  // Store the values of rowData inside object named 'data'
   const data = rowData.val();
 
   // console.log data
   console.log(data);
 
-  // store a function call for makeSingleMessageHTML(), which takes in our data and creates an HTML element with it
+  // Create a variable named singleMessage
+  // that stores function call for makeSingleMessageHTML()
   let singleMessage = makeSingleMessageHTML(data.USERNAME, data.MESSAGE);
 
-  // append the new message HTML element to allMessages
+  // Append the new message HTML element to allMessages
   allMessages.append(singleMessage);
 }
 
