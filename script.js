@@ -1,4 +1,3 @@
-// @ts-nocheck
 /**
  * @TODO get a reference to the Firebase Database object
  */
