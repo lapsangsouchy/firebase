@@ -76,7 +76,7 @@ body {
 #typing-container {
   /* size and colors */
   width: 90%;
-  height: 10%;
+  height: 15%;
   background-color: var(--accent);
 
   /* CSS box model */
